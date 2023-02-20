@@ -8,16 +8,16 @@ console.log(`Cloning ${apps.length} apps...`);
 for (const app of apps) {
     if (!fs.existsSync(`./sites/${app.name}`)) {
         execSync(`git clone https://github.com/shewmake-design/${app.name}.git ./sites/${app.name}`, {
-            stdio: 'inherit'
+            stdio: 'inherit',
         });
         console.log(`Successfully cloned ${app.name}.`);
             
             console.log(`Building ${app.name}...`)
             console.time(`[${app.name}] Build finished in`);
             execSync(`echo Installing dependencies &&` +
-				`cd /home/drone/.github/sites/${app.name} && npm install --force && ` +
+				`cd /home/drone/.github/sites/${app.name} && pnpm install --force && ` +
 				`echo Building site &&` +
-				`npm run build && ` +
+				`pnpm run build && ` +
 				`echo Restarting server &&` +
                 `cd /home/drone/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && ` +
                 `echo Successfully built ${app.name}`, {
