@@ -37,6 +37,8 @@ app.use((req, res, next) => {
 
   const app = apps.find(app => app.name === domain || app.name === domain.replace('www.', ''));
 
+  console.log(app)
+
   if (!app) {
     return res.status(404).send('Not found.');
   }
