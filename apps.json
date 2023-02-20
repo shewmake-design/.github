@@ -33,11 +33,11 @@
 		}
 	},
 	{
-		"name": "readingforlifeutah.org",
-		"cwd": "/home/drone/.github/sites/readingforlifeutah.org",
+		"name": "rflutah.org",
+		"cwd": "/home/drone/.github/sites/rflutah.org",
 		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/readingforlifeutah.org.err.log",
-		"out_file": "/home/drone/.github/sites/logs/readingforlifeutah.org.out.log",
+		"error_file": "/home/drone/.github/sites/logs/rflutah.org.err.log",
+		"out_file": "/home/drone/.github/sites/logs/rflutah.org.out.log",
 		"max_memory_restart": "100M",
 		"env": {
 			"PORT": 2004
