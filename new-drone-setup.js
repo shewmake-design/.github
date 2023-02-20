@@ -17,4 +17,13 @@ for (const app of apps) {
         console.log(`Successfully cloned ${app.name}.`);
         });
     }
+}
+    
+exec('pm2 start apps.json', (err, stdout, stderr) => {
+    if (err) {
+        console.error(err);
+        return;
     }
+    
+    console.log('Successfully started apps.');
+});
