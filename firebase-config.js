@@ -1,12 +1,7 @@
-// Import the functions you need from the SDKs you need
 const { initializeApp } = require("firebase/app");
 const { getDatabase } = require("firebase/database");
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export const firebaseConfig = {
+const firebaseConfig = {
 	apiKey: "AIzaSyChwYTwfUNM_Vd0e39RPYg7pSHxmJl49RI",
 	authDomain: "api-walterjs-dev.firebaseapp.com",
 	databaseURL: "https://api-walterjs-dev-default-rtdb.firebaseio.com",
@@ -17,6 +12,7 @@ export const firebaseConfig = {
 	measurementId: "G-T2LW60YV8Z",
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const database = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+module.exports = { firebaseConfig, app, database };
