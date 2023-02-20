@@ -59,7 +59,7 @@ app.use((req, res, next) => {
     return res.status(404).send('Not found.');
   }
 
-  proxy(`http://localhost:${app.env.PORT}`)(req, res, next);
+  proxy(`http://localhost:${app.port}`)(req, res, next);
 
 })
 
