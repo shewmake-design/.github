@@ -30,3 +30,6 @@ for (const app of apps) {
 			console.log(`----------------------------------------`);
     }
 }
+
+
+// TODO: put sites in the correct actions-runner directory, ensure that each site has it's .env.local file included (it's a private repo, so who cares?)
