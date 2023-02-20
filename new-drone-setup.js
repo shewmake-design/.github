@@ -19,7 +19,7 @@ for (const app of apps) {
 				`echo Building site &&` +
 				`npm run build && ` +
 				`echo Restarting server &&` +
-                `cd /home/drone/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && pm2 save && ` +
+                `cd /home/drone/.github && pm2 delete ecosystem.config.js --only ${app.name} && pm2 start ecosystem.config.js --only ${app.name} && pm2 save && ` +
                 `echo Successfully built ${app.name}`, {
                     stdio: 'inherit'
                 });

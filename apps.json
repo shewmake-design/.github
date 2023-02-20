@@ -1,80 +1,30 @@
 [
 	{
 		"name": "dixiemeats.com",
-		"bob": "quamdinkle",
-		"cwd": "/home/drone/.github/sites/dixiemeats.com",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/dixiemeats.com.err.log",
-		"out_file": "/home/drone/.github/sites/logs/dixiemeats.com.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2001
-		}
+		"port": 2001
 	},
 	{
 		"name": "scbaseball.org",
-		"cwd": "/home/drone/.github/sites/scbaseball.org",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/scbaseball.org.err.log",
-		"out_file": "/home/drone/.github/sites/logs/scbaseball.org.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2002
-		}
+		"port": 2002
 	},
 	{
 		"name": "natera.store",
-		"cwd": "/home/drone/.github/sites/natera.store",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/natera.store.err.log",
-		"out_file": "/home/drone/.github/sites/logs/natera.store.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2003
-		}
+		"port": 2003
 	},
 	{
 		"name": "rflutah.org",
-		"cwd": "/home/drone/.github/sites/rflutah.org",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/rflutah.org.err.log",
-		"out_file": "/home/drone/.github/sites/logs/rflutah.org.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2004
-		}
+		"port": 2004
 	},
 	{
 		"name": "peckservers.com",
-		"cwd": "/home/drone/.github/sites/peckservers.com",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/peckservers.com.err.log",
-		"out_file": "/home/drone/.github/sites/logs/peckservers.com.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2005
-		}
+		"port": 2005
 	},
 	{
 		"name": "stgeorge-painting.com",
-		"cwd": "/home/drone/.github/sites/stgeorge-painting.com",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/stgeorge-painting.com.err.log",
-		"out_file": "/home/drone/.github/sites/logs/stgeorge-painting.com.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2006
-		}
+		"port": 2006
 	},
 	{
 		"name": "cottonwoodgear.com",
-		"cwd": "/home/drone/.github/sites/cottonwoodgear.com",
-		"script": "npx next start -p $PORT",
-		"error_file": "/home/drone/.github/sites/logs/cottonwoodgear.com.err.log",
-		"out_file": "/home/drone/.github/sites/logs/cottonwoodgear.com.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2007
-		}
+		"port": 2007
 	}
 ]
