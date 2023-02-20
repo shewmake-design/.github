@@ -3,6 +3,13 @@ const app = require("express")();
 const proxy = require("express-http-proxy");
 const os = require("os");
 
+const { app: firebaseApp, database } = require("./firebase-config");
+const { onValue, ref, onChildChanged } = require("firebase/database");
+
+onChildChanged("/", (snapshot, name) => {
+	console.log(name);
+});
+
 setInterval(() => {
 	exec("git fetch --all", (err, stdout, stderr) => {
 		if (err) {
