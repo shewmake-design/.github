@@ -19,7 +19,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run build --if-present
-    - run: cd /home/drone/sites
+    - run: cd /home/drone/.github
     - run: pm2 delete apps.json
     - run: pm2 start apps.json
       env:
