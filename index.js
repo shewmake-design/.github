@@ -3,11 +3,20 @@ const app = require("express")();
 const proxy = require("express-http-proxy");
 const os = require("os");
 
-const { app: firebaseApp, database } = require("./firebase-config");
-const { onValue, ref, onChildChanged } = require("firebase/database");
+var admin = require("firebase-admin");
 
-onChildChanged("/", (snapshot, name) => {
-	console.log(name);
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: "https://api-walterjs-dev-default-rtdb.firebaseio.com",
+});
+
+const db = admin.database();
+const ref = db.ref("/");
+
+ref.on("value", (snapshot) => {
+	console.log(snapshot.val());
 });
 
 setInterval(() => {
@@ -29,13 +38,16 @@ setInterval(() => {
 				return;
 			} else {
 				console.log("Updates found.");
-				exec("pm2 restart app-puller", (err, stdout, stderr) => {
-					if (err) {
-						console.error(err);
-						return;
+				exec(
+					"npm i && pm2 restart app-puller",
+					(err, stdout, stderr) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+						console.log("Restarted app-puller.");
 					}
-					console.log("Restarted app-puller.");
-				});
+				);
 			}
 
 			console.log("Successfully pulled apps list.");
