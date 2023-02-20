@@ -17,34 +17,33 @@ for (const app of apps) {
         console.log(`Successfully cloned ${app.name}.`);
             
             console.log(`Building ${app.name}...`)
-            console.time(`Built ${app.name} in`)
-            const proc = execSync(`echo Installing dependencies &&` +
+            console.timeEnd(`[${app.name}] Build finished in`);
+            execSync(`echo Installing dependencies &&` +
 				`cd /home/drone/.github/sites/${app.name} && npm install --force && ` +
 				`echo Building site &&` +
 				`npm run build && ` +
 				`echo Restarting server &&` +
                 `cd /home/drone/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && ` +
                 `echo Successfully built ${app.name}`, (err, stdout, stderr) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+
+                if (stdout) {
+                    console.log(`[${app.name}] ${stdout}`);
+                }
+
+                if (stderr) {
+                    console.error(`[${app.name}] ${stderr}`);
+                }
             });
-            
-		proc.stdout.on("data", (data) => {
-			console.log(`[${req.body.repository.name}] ${data}`);
-		});
-		proc.stderr.on("data", (data) => {
-			console.error(`[${req.body.repository.name}] ${data}`);
-		});
-		proc.on("close", (code) => {
+
 			console.log(`----------------------------------------`);
 			console.log(
 				`[${req.body.repository.name}] Process exited with code ${code}`
 			);
-			console.timeEnd(`[${req.body.repository.name}] Build finished in`);
+			console.timeEnd(`[${app.name}] Build finished in`);
 			console.log(`----------------------------------------`);
-        })
-            console.timeEnd(`Built ${app.name} in`)
     }
 }
