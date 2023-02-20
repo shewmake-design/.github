@@ -24,7 +24,6 @@ setInterval(() => {
             }
 
         // check if there were updates
-        console.log(stdout, stdout === 'Already up to date.', stdout.includes('Already up to date.'));
         if (stdout.includes('Already up to date.')) {
           console.log('No updates found.');
           return;
