@@ -1,0 +1,91 @@
+[
+	{
+        "id": 69,
+		"name": "build.shewmake.design",
+		"cwd": "/home/drone/sites/build.shewmake.design",
+		"script": "node index.js",
+		"error_file": "/home/drone/sites/logs/build.shewmake.design.err.log",
+		"out_file": "/home/drone/sites/logs/build.shewmake.design.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2000
+		}
+	},
+	{
+		"name": "dixiemeats.com",
+		"cwd": "/home/drone/sites/dixiemeats.com",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/dixiemeats.com.err.log",
+		"out_file": "/home/drone/sites/logs/dixiemeats.com.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2001
+		}
+	},
+	{
+		"name": "scbaseball.org",
+		"cwd": "/home/drone/sites/scbaseball.org",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/scbaseball.org.err.log",
+		"out_file": "/home/drone/sites/logs/scbaseball.org.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2002
+		}
+	},
+	{
+		"name": "natera.store",
+		"cwd": "/home/drone/sites/natera.store",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/natera.store.err.log",
+		"out_file": "/home/drone/sites/logs/natera.store.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2003
+		}
+	},
+	{
+		"name": "readingforlifeutah.org",
+		"cwd": "/home/drone/sites/readingforlifeutah.org",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/readingforlifeutah.org.err.log",
+		"out_file": "/home/drone/sites/logs/readingforlifeutah.org.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2004
+		}
+	},
+	{
+		"name": "peckservers.com",
+		"cwd": "/home/drone/sites/peckservers.com",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/peckservers.com.err.log",
+		"out_file": "/home/drone/sites/logs/peckservers.com.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2005
+		}
+	},
+	{
+		"name": "stgeorge-painting.com",
+		"cwd": "/home/drone/sites/stgeorge-painting.com",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/stgeorge-painting.com.err.log",
+		"out_file": "/home/drone/sites/logs/stgeorge-painting.com.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2006
+		}
+	},
+	{
+		"name": "cottonwoodgear.com",
+		"cwd": "/home/drone/sites/cottonwoodgear.com",
+		"script": "npx next start -p $PORT",
+		"error_file": "/home/drone/sites/logs/cottonwoodgear.com.err.log",
+		"out_file": "/home/drone/sites/logs/cottonwoodgear.com.out.log",
+		"max_memory_restart": "100M",
+		"env": {
+			"PORT": 2007
+		}
+	}
+]
