@@ -41,7 +41,7 @@ for (const app of apps) {
 
 			console.log(`----------------------------------------`);
 			console.log(
-				`[${req.body.repository.name}] Process exited with code ${code}`
+				`[${app.name}] Process exited with code ${code}`
 			);
 			console.timeEnd(`[${app.name}] Build finished in`);
 			console.log(`----------------------------------------`);
