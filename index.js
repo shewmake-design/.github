@@ -29,7 +29,7 @@ setInterval(() => {
     })
 }, 1000 * 30);
 
-app.use((req, res) => {
+app.use((req, res, next) => {
 
   // check domain against apps.json to get port, redirect traffic to that port
   const domain = req.get('host');
@@ -41,7 +41,7 @@ app.use((req, res) => {
     return res.status(404).send('Not found.');
   }
 
-  proxy(`http://localhost:${app.port}`)(req, res);
+  proxy(`http://localhost:${app.port}`)(req, res, next);
 
 })
 
