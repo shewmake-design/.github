@@ -20,7 +20,7 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: cd /home/drone/.github
-    - run: pm2 delete apps.json
-    - run: pm2 start apps.json
+    - run: pm2 delete ecosystem.config.js
+    - run: pm2 start ecosystem.config.js
       env:
         CI: true
