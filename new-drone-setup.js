@@ -17,7 +17,7 @@ for (const app of apps) {
             
             console.log(`Building ${app.name}...`)
             console.time(`Built ${app.name} in`)
-            const proc = execSync(`echo Installing dependencies &&` +
+            const proc = exec(`echo Installing dependencies &&` +
 				`cd /home/drone/.github/sites/${app.name} && npm install --force && ` +
 				`echo Building site &&` +
 				`npm run build && ` +
