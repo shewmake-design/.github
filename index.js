@@ -22,6 +22,7 @@ setInterval(() => {
             }
 
     console.log('Successfully pulled apps list.');
+      });
   });
-});
-}, 1000 * 30) // 30 seconds
+    })
+}, 1000 * 30);
