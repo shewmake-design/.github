@@ -14,7 +14,17 @@ for (const app of apps) {
             return;
         }
     
-        console.log(`Successfully cloned ${app.name}.`);
+            console.log(`Successfully cloned ${app.name}.`);
+            
+            console.log(`Installing and building ${app.name}...`)
+            exec(`cd ./sites/${app.name} && npm install && npm run build`, (err, stdout, stderr) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+            
+                console.log(`Successfully installed and built ${app.name}.`);
+            })
         });
     }
 }
