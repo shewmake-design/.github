@@ -23,7 +23,7 @@ setInterval(() => {
 		//     return;
 		//   }
 
-		exec("git pull", (err, stdout, stderr) => {
+		exec("git pull origin dev", (err, stdout, stderr) => {
 			if (err) {
 				console.error(err);
 				return;
