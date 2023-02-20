@@ -8,12 +8,13 @@ console.log(`Cloning ${apps.length} apps...`);
 for (const app of apps) {
     if (!fs.existsSync(`./sites/${app.name}`)) {
         execSync(`git clone https://github.com/shewmake-design/${app.name}.git ./sites/${app.name}`, (err, stdout, stderr) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
+            if (err) {
+                console.error(err);
+                return;
+            }
     
-            console.log(`Successfully cloned ${app.name}.`);
+        });
+        console.log(`Successfully cloned ${app.name}.`);
             
             console.log(`Building ${app.name}...`)
             console.time(`Built ${app.name} in`)
@@ -45,6 +46,5 @@ for (const app of apps) {
 			console.log(`----------------------------------------`);
         })
             console.timeEnd(`Built ${app.name} in`)
-        });
     }
 }
