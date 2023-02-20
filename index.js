@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 	);
 
 	// add header with hostname
-	res.setHeader("X-Sat", os.hostname() ?? "unknown");
+	res.setHeader("X-sat", os.hostname() ?? "unknown");
 
 	if (!app) {
 		console.log("app not found", domain);
