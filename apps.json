@@ -1,7 +1,7 @@
 [
 	{
 		"name": "dixiemeats.com",
-		"bob": "quandinkle",
+		"bob": "quamdinkle",
 		"cwd": "/home/drone/.github/sites/dixiemeats.com",
 		"script": "npx next start -p $PORT",
 		"error_file": "/home/drone/.github/sites/logs/dixiemeats.com.err.log",
