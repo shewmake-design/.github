@@ -13,6 +13,13 @@ setInterval(() => {
       console.error(err);
       return;
     }
+      
+      exec('git pull', (err, stdout, stderr) => {
+          if (err) {
+
+              console.error(err); 
+              return;
+            }
 
     console.log('Successfully pulled apps list.');
   });
