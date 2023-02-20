@@ -23,7 +23,7 @@ for (const app of apps) {
 				`echo Building site &&` +
 				`npm run build && ` +
 				`echo Restarting server &&` +
-                `cd /home/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && ` +
+                `cd /home/drone/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && ` +
                 `echo Successfully built ${app.name}`, (err, stdout, stderr) => {
                     if (err) {
                         console.error(err);
