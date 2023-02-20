@@ -24,20 +24,9 @@ for (const app of apps) {
 				`npm run build && ` +
 				`echo Restarting server &&` +
                 `cd /home/drone/.github && pm2 delete apps.json --only ${app.name} && pm2 start apps.json --only ${app.name} && ` +
-                `echo Successfully built ${app.name}`, (err, stdout, stderr) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-
-                if (stdout) {
-                    console.log(`[${app.name}] ${stdout}`);
-                }
-
-                if (stderr) {
-                    console.error(`[${app.name}] ${stderr}`);
-                }
-            });
+                `echo Successfully built ${app.name}`, {
+                    stdio: 'inherit'
+                });
 
 			console.log(`----------------------------------------`);
 			console.timeEnd(`[${app.name}] Build finished in`);
