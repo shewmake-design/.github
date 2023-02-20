@@ -23,6 +23,23 @@ setInterval(() => {
               return;
             }
 
+        // check if there were updates
+        if (stdout.includes('Already up to date.')) {
+          console.log('No updates found.');
+          return;
+        }
+        else {
+          console.log('Updates found.');
+          exec('pm2 restart app-puller', (err, stdout, stderr) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            console.log('Restarted app-puller.');
+          }
+          );
+        }
+
     console.log('Successfully pulled apps list.');
       });
   });
@@ -37,9 +54,8 @@ app.use((req, res, next) => {
 
   const app = apps.find(app => app.name === domain || app.name === domain.replace('www.', ''));
 
-  console.log(app)
-
   if (!app) {
+    console.log('app not found', domain)
     return res.status(404).send('Not found.');
   }
 
