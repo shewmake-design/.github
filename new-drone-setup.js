@@ -7,17 +7,14 @@ const apps = JSON.parse(fs.readFileSync('./apps.json', 'utf8'));
 console.log(`Cloning ${apps.length} apps...`);
 for (const app of apps) {
     if (!fs.existsSync(`./sites/${app.name}`)) {
-        execSync(`git clone https://github.com/shewmake-design/${app.name}.git ./sites/${app.name}`, (err, stdout, stderr) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
+        execSync(`git clone https://github.com/shewmake-design/${app.name}.git ./sites/${app.name}`, {
+            stdio: 'inherit'
     
         });
         console.log(`Successfully cloned ${app.name}.`);
             
             console.log(`Building ${app.name}...`)
-            console.timeEnd(`[${app.name}] Build finished in`);
+            console.time(`[${app.name}] Build finished in`);
             execSync(`echo Installing dependencies &&` +
 				`cd /home/drone/.github/sites/${app.name} && npm install --force && ` +
 				`echo Building site &&` +
