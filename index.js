@@ -8,7 +8,7 @@ setInterval(() => {
     return;
   }
 
-  exec(`git reset --hard origin/${remote_branch_name}`, (err, stdout, stderr) => {
+  exec(`git reset --hard`, (err, stdout, stderr) => {
     if (err) {
       console.error(err);
       return;
