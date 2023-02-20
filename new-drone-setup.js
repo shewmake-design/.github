@@ -9,7 +9,6 @@ for (const app of apps) {
     if (!fs.existsSync(`./sites/${app.name}`)) {
         execSync(`git clone https://github.com/shewmake-design/${app.name}.git ./sites/${app.name}`, {
             stdio: 'inherit'
-    
         });
         console.log(`Successfully cloned ${app.name}.`);
             

@@ -1,17 +1,5 @@
 [
 	{
-        "id": 69,
-		"name": "build.shewmake.design",
-		"cwd": "/home/drone/.github/sites/build.shewmake.design",
-		"script": "node index.js",
-		"error_file": "/home/drone/.github/sites/logs/build.shewmake.design.err.log",
-		"out_file": "/home/drone/.github/sites/logs/build.shewmake.design.out.log",
-		"max_memory_restart": "100M",
-		"env": {
-			"PORT": 2000
-		}
-	},
-	{
 		"name": "dixiemeats.com",
 		"cwd": "/home/drone/.github/sites/dixiemeats.com",
 		"script": "npx next start -p $PORT",

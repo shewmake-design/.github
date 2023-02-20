@@ -1,5 +1,7 @@
 
 const { exec } = require('child_process');
+const app = require('express')();
+const proxy = require('express-http-proxy');
 
 setInterval(() => {
     exec('git fetch --all', (err, stdout, stderr) => {
@@ -26,3 +28,21 @@ setInterval(() => {
   });
     })
 }, 1000 * 30);
+
+app.use((req, res) => {
+
+  // check domain against apps.json to get port, redirect traffic to that port
+  const domain = req.get('host');
+  const apps = require('./apps.json');
+
+  const app = apps.find(app => app.domain === domain);
+
+  if (!app) {
+    return res.status(404).send('Not found.');
+  }
+
+  proxy(`http://localhost:${app.port}`)(req, res);
+
+})
+
+app.listen(2000);
