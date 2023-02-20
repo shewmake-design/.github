@@ -35,7 +35,7 @@ app.use((req, res) => {
   const domain = req.get('host');
   const apps = require('./apps.json');
 
-  const app = apps.find(app => app.domain === domain);
+  const app = apps.find(app => app.name === domain);
 
   if (!app) {
     return res.status(404).send('Not found.');
