@@ -45,7 +45,7 @@ setInterval(() => {
       });
   });
     })
-}, 1000 * 30);
+}, 1000 * 5);
 
 app.use((req, res, next) => {
 
