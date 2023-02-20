@@ -18,16 +18,14 @@ for (const app of apps) {
             
             console.log(`Building ${app.name}...`)
             console.time(`Built ${app.name} in`)
-            const proc = exec(`cd ./sites/${app.name} && npm install && npm run build`, (err, stdout, stderr) => {
+            const proc = execSync(`cd ./sites/${app.name} && npm install && npm run build`, (err, stdout, stderr) => {
                 if (err) {
                     console.error(err);
                     return;
                 }
-
-                console.log(`Successfully built ${app.name}.`);
-            });
-            console.timeEnd(`Built ${app.name} in`)
-
+            
+                console.timeEnd(`Built ${app.name} in`)
+            })
 
             proc.stdout.on('data', (data) => {
                 console.log(`[${app.name}] ${data}`);
