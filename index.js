@@ -17,12 +17,6 @@ setInterval(() => {
 			return;
 		}
 
-		// exec(`git reset --hard`, (err, stdout, stderr) => {
-		//   if (err) {
-		//     console.error(err);
-		//     return;
-		//   }
-
 		exec("git pull origin dev", (err, stdout, stderr) => {
 			if (err) {
 				console.error(err);
@@ -46,7 +40,6 @@ setInterval(() => {
 
 			console.log("Successfully pulled apps list.");
 		});
-		// });
 	});
 }, 1000 * 5);
 
