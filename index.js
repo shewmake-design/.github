@@ -21,7 +21,7 @@ ref.on("child_changed", (snapshot) => {
 
 	const apps = require("./apps.json");
 
-	const app = apps.find((app) => app.name === project.name);
+	const app = apps.find((app) => app.name.includes(project.domain));
 
 	if (!app) {
 		console.log("app not found", project.name);
