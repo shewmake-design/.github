@@ -2,10 +2,11 @@ const { exec } = require("child_process");
 const app = require("express")();
 const proxy = require("express-http-proxy");
 const os = require("os");
-
+const axios = require("axios");
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./serviceAccountKey.json");
+const e = require("express");
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
@@ -18,7 +19,27 @@ const ref = db.ref("/");
 ref.on("child_changed", (snapshot) => {
 	const project = snapshot.val();
 
-	console.log(project.info);
+	console.log(
+		`[${project.name}] Sending revalidation request to '${project.domain}'`
+	);
+
+	axios
+		.get(`https://${project.domain}/api/revalidate`)
+		.then((res) => {
+			console.log(`[${project.name}] Revalidation request sent.`);
+
+			if (res.status !== 200) {
+				console.log(`[${project.name}] Revalidation request failed.`);
+			} else {
+				console.log(
+					`[${project.name}] Revalidation request was successful.`
+				);
+			}
+		})
+		.catch((err) => {
+			console.log(`[${project.name}] Revalidation request failed.`);
+			console.log(err);
+		});
 });
 
 setInterval(() => {
