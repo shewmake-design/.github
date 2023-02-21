@@ -2,6 +2,56 @@ const { exec } = require("child_process");
 const app = require("express")();
 const proxy = require("express-http-proxy");
 const os = require("os");
+const axios = require("axios");
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./serviceAccountKey.json");
+const e = require("express");
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: "https://api-walterjs-dev-default-rtdb.firebaseio.com",
+});
+
+const db = admin.database();
+const ref = db.ref("/");
+
+ref.on("child_changed", (snapshot) => {
+	const project = snapshot.val().info;
+
+	const apps = require("./apps.json");
+
+	const app = apps.find((app) => app.name.includes(project.domain));
+
+	if (!app) {
+		console.log("app not found", project.name);
+		return;
+	} else {
+		console.log(
+			`[${project.name}] Sending revalidation request to '${app.name}'`
+		);
+
+		axios
+			.get(`http://localhost:${app.port}/api/revalidate`)
+			.then((res) => {
+				console.log(`[${project.name}] Revalidation request sent.`);
+
+				if (res.status !== 200) {
+					console.log(
+						`[${project.name}] Revalidation request failed.`
+					);
+				} else {
+					console.log(
+						`[${project.name}] Revalidation request was successful.`
+					);
+				}
+			})
+			.catch((err) => {
+				console.log(`[${project.name}] Revalidation request failed.`);
+				console.log(err);
+			});
+	}
+});
 
 setInterval(() => {
 	exec("git fetch --all", (err, stdout, stderr) => {
@@ -10,13 +60,7 @@ setInterval(() => {
 			return;
 		}
 
-		// exec(`git reset --hard`, (err, stdout, stderr) => {
-		//   if (err) {
-		//     console.error(err);
-		//     return;
-		//   }
-
-		exec("git pull", (err, stdout, stderr) => {
+		exec("git pull origin dev", (err, stdout, stderr) => {
 			if (err) {
 				console.error(err);
 				return;
@@ -28,18 +72,20 @@ setInterval(() => {
 				return;
 			} else {
 				console.log("Updates found.");
-				exec("pm2 restart app-puller", (err, stdout, stderr) => {
-					if (err) {
-						console.error(err);
-						return;
+				exec(
+					"npm i && pm2 restart app-puller",
+					(err, stdout, stderr) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+						console.log("Restarted app-puller.");
 					}
-					console.log("Restarted app-puller.");
-				});
+				);
 			}
 
 			console.log("Successfully pulled apps list.");
 		});
-		// });
 	});
 }, 1000 * 5);
 
