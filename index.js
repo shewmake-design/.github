@@ -19,27 +19,38 @@ const ref = db.ref("/");
 ref.on("child_changed", (snapshot) => {
 	const project = snapshot.val();
 
-	console.log(
-		`[${project.name}] Sending revalidation request to '${project.domain}'`
-	);
+	const apps = require("./apps.json");
 
-	axios
-		.get(`https://${project.domain}/api/revalidate`)
-		.then((res) => {
-			console.log(`[${project.name}] Revalidation request sent.`);
+	const app = apps.find((app) => app.name === project.name);
 
-			if (res.status !== 200) {
+	if (!app) {
+		console.log("app not found", project.name);
+		return;
+	} else {
+		console.log(
+			`[${project.name}] Sending revalidation request to '${app.name}'`
+		);
+
+		axios
+			.get(`http://localhost:${app.port}/api/revalidate`)
+			.then((res) => {
+				console.log(`[${project.name}] Revalidation request sent.`);
+
+				if (res.status !== 200) {
+					console.log(
+						`[${project.name}] Revalidation request failed.`
+					);
+				} else {
+					console.log(
+						`[${project.name}] Revalidation request was successful.`
+					);
+				}
+			})
+			.catch((err) => {
 				console.log(`[${project.name}] Revalidation request failed.`);
-			} else {
-				console.log(
-					`[${project.name}] Revalidation request was successful.`
-				);
-			}
-		})
-		.catch((err) => {
-			console.log(`[${project.name}] Revalidation request failed.`);
-			console.log(err);
-		});
+				console.log(err);
+			});
+	}
 });
 
 setInterval(() => {
