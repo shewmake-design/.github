@@ -15,8 +15,10 @@ admin.initializeApp({
 const db = admin.database();
 const ref = db.ref("/");
 
-ref.on("value", (snapshot) => {
-	console.log(snapshot.val());
+ref.on("child_changed", (snapshot) => {
+	const project = snapshot.val();
+
+	console.log(project.info);
 });
 
 setInterval(() => {
