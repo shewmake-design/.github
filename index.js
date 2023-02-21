@@ -17,7 +17,7 @@ const db = admin.database();
 const ref = db.ref("/");
 
 ref.on("child_changed", (snapshot) => {
-	const project = snapshot.val();
+	const project = snapshot.val().info;
 
 	const apps = require("./apps.json");
 
