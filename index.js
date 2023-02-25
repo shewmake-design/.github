@@ -99,7 +99,6 @@ setInterval(() => {
 							console.error(err);
 							return;
 						}
-						console.log("Updated apps.");
 					}).stdout.pipe(process.stdout);
 				}
 
