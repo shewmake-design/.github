@@ -94,11 +94,15 @@ setInterval(() => {
 							console.log("Restarted app-puller.");
 						}
 					);
-					spawn("node new-drone-setup.js", [], {
-						detached: true,
-						// inherit output, but not input
-						stdio: ["ignore", "inherit", "inherit"],
-					});
+					spawn(
+						"/bin/node",
+						["/home/drone/.github/new-drone-setup.js"],
+						{
+							detached: true,
+							// inherit output, but not input
+							stdio: ["ignore", "inherit", "inherit"],
+						}
+					);
 				}
 				console.log("Successfully pulled apps list.");
 			}
