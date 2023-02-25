@@ -1,14 +1,10 @@
-name: Test Build
+name: Prod Build
 
-# run when pull request is closed
-on:
-    pull_request:
-        types: [closed]
+on: [pull_request]
 
 jobs:
     build:
-        if: github.event.pull_request.merged == true
-        runs-on: [self-hosted, linux, x64]
+        runs-on: [self-hosted, linux, x64, dev]
 
         strategy:
             matrix:
