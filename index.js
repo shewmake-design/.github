@@ -96,7 +96,8 @@ setInterval(() => {
 					);
 					spawn("node new-drone-setup.js", [], {
 						detached: true,
-						stdio: "inherit",
+						// inherit output, but not input
+						stdio: ["ignore", "inherit", "inherit"],
 					});
 				}
 				console.log("Successfully pulled apps list.");
