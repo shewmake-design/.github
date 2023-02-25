@@ -1,6 +1,6 @@
-name: Test Build
+name: Prod Build
 
-# run when pull request is closed
+# run when pull request is closed and merged
 on:
     pull_request:
         types: [closed]
