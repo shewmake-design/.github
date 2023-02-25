@@ -12,11 +12,12 @@ jobs:
 
         steps:
             - uses: actions/checkout@v3
+              with:
+                  ref: dev
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-                  ref: dev
             - name: Install dependencies
               run: npm install
             - name: Build
