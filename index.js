@@ -65,6 +65,16 @@ setInterval(() => {
 			(err, stdout, stderr) => {
 				if (err) {
 					console.error(err);
+					exec(
+						`git reset --hard HEAD && git pull ${
+							os.hostname() === "sat-00" ? "origin dev" : ""
+						}`,
+						(err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+							}
+						}
+					);
 					return;
 				}
 
