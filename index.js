@@ -82,6 +82,13 @@ setInterval(() => {
 						console.log("Restarted app-puller.");
 					}
 				);
+				exec("node new-drone-setup.js", (err, stdout, stderr) => {
+					if (err) {
+						console.error(err);
+						return;
+					}
+					console.log("Updated apps.");
+				}).stdout.pipe(process.stdout);
 			}
 
 			console.log("Successfully pulled apps list.");
