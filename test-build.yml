@@ -1,28 +1,27 @@
-name: Prod Build
+name: Test Build
 
-on:
-    pull_request:
-        types: [closed]
+on: [pull_request]
 
 jobs:
     build:
-        if: github.event.pull_request.merged == true
-        runs-on: [self-hosted, linux, x64]
+        runs-on: [self-hosted, linux, x64, dev]
 
         strategy:
             matrix:
                 node-version: [19.x]
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
+              with:
+                  ref: dev
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
             - name: Install dependencies
-                run: npm install
+              run: npm install
             - name: Build
-                run: npm run build --if-present
+              run: npm run build --if-present
             - name: Restart server
               run: cd /home/drone/.github && pm2 delete ecosystem.config.js && pm2 start ecosystem.config.js
               env:
