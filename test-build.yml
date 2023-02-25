@@ -11,16 +11,12 @@ jobs:
                 node-version: [19.x]
 
         steps:
-            # - uses: actions/checkout@v3
+            - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-                  path: dev
-            - name: Reset hard
-              run: git reset --hard
-            - name: Pull dev
-              run: git pull origin dev --ff-only
+                  ref: dev
             - name: Install dependencies
               run: npm install
             - name: Build
