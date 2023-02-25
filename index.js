@@ -94,6 +94,7 @@ setInterval(() => {
 							console.log("Restarted app-puller.");
 						}
 					);
+					console.log("Spawning app setup...");
 					spawn(
 						"/bin/node",
 						["/home/drone/.github/new-drone-setup.js"],
