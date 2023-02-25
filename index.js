@@ -60,32 +60,51 @@ setInterval(() => {
 			return;
 		}
 
-		exec("git pull origin dev", (err, stdout, stderr) => {
-			if (err) {
-				console.error(err);
-				return;
-			}
+		exec(
+			`git pull ${os.hostname() === "sat-00" ? "origin dev" : ""}`,
+			(err, stdout, stderr) => {
+				if (err) {
+					console.error(err);
+					exec(
+						`git reset --hard HEAD && git pull ${
+							os.hostname() === "sat-00" ? "origin dev" : ""
+						}`,
+						(err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+							}
+						}
+					);
+					return;
+				}
 
-			// check if there were updates
-			if (stdout.includes("Already up to date.")) {
-				console.log("No updates found.");
-				return;
-			} else {
-				console.log("Updates found.");
-				exec(
-					"npm i && pm2 restart app-puller",
-					(err, stdout, stderr) => {
+				// check if there were updates
+				if (stdout.includes("Already up to date.")) {
+					console.log("No updates found.");
+					return;
+				} else {
+					console.log("Updates found.");
+					exec(
+						"npm i && pm2 restart app-puller",
+						(err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+							console.log("Restarted app-puller.");
+						}
+					);
+					exec("node new-drone-setup.js", (err, stdout, stderr) => {
 						if (err) {
 							console.error(err);
 							return;
 						}
-						console.log("Restarted app-puller.");
-					}
-				);
-			}
+					}).stdout.pipe(process.stdout);
+				}
 
-			console.log("Successfully pulled apps list.");
-		});
+				console.log("Successfully pulled apps list.");
+			}
+		);
 	});
 }, 1000 * 5);
 
