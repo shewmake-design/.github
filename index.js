@@ -1,4 +1,4 @@
-const { exec } = require("child_process");
+const { exec, spawn } = require("child_process");
 const app = require("express")();
 const proxy = require("express-http-proxy");
 const os = require("os");
@@ -94,14 +94,17 @@ setInterval(() => {
 							console.log("Restarted app-puller.");
 						}
 					);
-					exec("node new-drone-setup.js", (err, stdout, stderr) => {
-						if (err) {
-							console.error(err);
-							return;
+					console.log("Spawning app setup...");
+					spawn(
+						"/bin/node",
+						["/home/drone/.github/new-drone-setup.js"],
+						{
+							detached: true,
+							// inherit output, but not input
+							stdio: ["ignore", "inherit", "inherit"],
 						}
-					}).stdout.pipe(process.stdout);
+					);
 				}
-
 				console.log("Successfully pulled apps list.");
 			}
 		);
