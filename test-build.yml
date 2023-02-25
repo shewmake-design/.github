@@ -20,7 +20,7 @@ jobs:
             - name: Reset hard
               run: git reset --hard
             - name: Pull dev
-              run: git pull origin dev
+              run: git pull origin dev --ff-only
             - name: Install dependencies
               run: npm install
             - name: Build
