@@ -133,3 +133,4 @@ app.use((req, res, next) => {
 });
 
 app.listen(2000, () => console.log("Listening on port 2000"));
+loop();
