@@ -53,7 +53,7 @@ ref.on("child_changed", (snapshot) => {
 	}
 });
 
-setInterval(() => {
+const loop = () => {
 	exec("git fetch --all", (err, stdout, stderr) => {
 		if (err) {
 			console.error(err);
@@ -75,25 +75,15 @@ setInterval(() => {
 							}
 						}
 					);
-					return;
+					return setTimeout(loop, 1000 * 5);
 				}
 
 				// check if there were updates
 				if (stdout.includes("Already up to date.")) {
 					console.log("No updates found.");
-					return;
+					return setTimeout(loop, 1000 * 5);
 				} else {
 					console.log("Updates found.");
-					exec(
-						"npm i && pm2 restart app-puller",
-						(err, stdout, stderr) => {
-							if (err) {
-								console.error(err);
-								return;
-							}
-							console.log("Restarted app-puller.");
-						}
-					);
 					console.log("Spawning app setup...");
 					spawn(
 						"/bin/node",
@@ -104,12 +94,23 @@ setInterval(() => {
 							stdio: ["ignore", "inherit", "inherit"],
 						}
 					);
+					console.log("Restarting app-puller...");
+					exec(
+						"npm i && pm2 restart app-puller",
+						(err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+							console.log("Restarted app-puller.");
+						}
+					);
 				}
 				console.log("Successfully pulled apps list.");
 			}
 		);
 	});
-}, 1000 * 5);
+};
 
 app.use((req, res, next) => {
 	// check domain against apps.json to get port, redirect traffic to that port
