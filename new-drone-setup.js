@@ -33,15 +33,15 @@ for (const app of apps) {
 	console.log(`Building ${app.name}...`);
 	console.time(`[${app.name}] Build finished in`);
 	execSync(
-		`echo Installing dependencies &&` +
+		`echo Installing dependencies && ` +
 			`cd ${
 				app.apiKey
 					? `/home/drone/sites/${app.name}`
 					: `${SITE_DIR}/${app.name}/${app.name}`
-			} && pnpm install --force --shamefully-hoist && ` +
-			`echo Building site &&` +
+			} && pnpm pkg delete scripts.prepare && pnpm install --force --shamefully-hoist --production && ` +
+			`echo Building site && ` +
 			`API_KEY=${app.apiKey} npm run build && ` +
-			`echo Restarting server &&` +
+			`echo Restarting server && ` +
 			`cd ~/.github && pm2 delete ecosystem.config.js --only ${app.name} && pm2 start ecosystem.config.js --only ${app.name} && pm2 save && ` +
 			`echo Successfully built ${app.name}`,
 		{
