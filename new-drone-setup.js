@@ -38,7 +38,7 @@ for (const app of apps) {
 				app.apiKey
 					? `/home/drone/sites/${app.name}`
 					: `${SITE_DIR}/${app.name}/${app.name}`
-			} && pnpm pkg delete scripts.prepare && pnpm install --force --shamefully-hoist && ` +
+			} && pnpm pkg delete scripts.prepare && pnpm install --force --shamefully-hoist --production && ` +
 			`echo Building site && ` +
 			`API_KEY=${app.apiKey} npm run build && ` +
 			`echo Restarting server && ` +
