@@ -118,7 +118,7 @@ app.use((req, res, next) => {
 	const apps = require("./apps.json");
 
 	const app = apps.find(
-		(app) => app.name === domain || app.name === domain.replace("www.", "")
+		(app) => app.name === domain || app.name === domain?.replace("www.", "")
 	);
 
 	// add header with hostname
