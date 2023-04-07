@@ -115,10 +115,13 @@ const loop = () => {
 app.use((req, res, next) => {
 	// check domain against apps.json to get port, redirect traffic to that port
 	const domain = req.get("host");
+
+	if (!domain) return next();
+
 	const apps = require("./apps.json");
 
 	const app = apps.find(
-		(app) => app.name === domain || app.name === domain?.replace("www.", "")
+		(app) => app.name === domain || app.name === domain.replace("www.", "")
 	);
 
 	// add header with hostname
@@ -126,8 +129,7 @@ app.use((req, res, next) => {
 
 	if (!app) {
 		console.log("app not found", domain);
-		// return res.status(404).send("Not found.");
-		return next();
+		return res.status(404).send("Not found.");
 	}
 
 	proxy(`http://localhost:${app.port}`)(req, res, next);
