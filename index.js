@@ -112,6 +112,26 @@ const loop = () => {
 	});
 };
 
+app.use((req, res, next) => {
+	// check domain against apps.json to get port, redirect traffic to that port
+	const domain = req.get("host");
+	const apps = require("./apps.json");
+
+	const app = apps.find(
+		(app) => app.name === domain || app.name === domain.replace("www.", "")
+	);
+
+	// add header with hostname
+	res.setHeader("x-node", os.hostname() ?? "unknown");
+
+	if (!app) {
+		console.log("app not found", domain);
+		return res.status(404).send("Not found.");
+	}
+
+	proxy(`http://localhost:${app.port}`)(req, res, next);
+});
+
 app.get("/", (req, res) => {
 	const apps = require("./apps.json");
 
@@ -132,26 +152,6 @@ app.get("/", (req, res) => {
 		const status = apps.every((app) => app.status === 200) ? 200 : 500;
 		res.status(status).json(apps);
 	});
-});
-
-app.use((req, res, next) => {
-	// check domain against apps.json to get port, redirect traffic to that port
-	const domain = req.get("host");
-	const apps = require("./apps.json");
-
-	const app = apps.find(
-		(app) => app.name === domain || app.name === domain.replace("www.", "")
-	);
-
-	// add header with hostname
-	res.setHeader("x-node", os.hostname() ?? "unknown");
-
-	if (!app) {
-		console.log("app not found", domain);
-		return res.status(404).send("Not found.");
-	}
-
-	proxy(`http://localhost:${app.port}`)(req, res, next);
 });
 
 app.listen(2000, () => console.log("Listening on port 2000"));
