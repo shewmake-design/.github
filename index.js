@@ -144,7 +144,8 @@ app.use("/", (req, res) => {
 				return { ...app, status: res.status };
 			})
 			.catch((err) => {
-				return { ...app, status: err.response.status };
+				console.log(err);
+				return { ...app, status: err?.response?.status };
 			});
 	});
 
