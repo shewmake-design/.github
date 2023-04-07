@@ -133,7 +133,7 @@ app.use((req, res, next) => {
 	proxy(`http://localhost:${app.port}`)(req, res, next);
 });
 
-app.get("/", (req, res) => {
+app.use("/", (req, res) => {
 	const apps = require("./apps.json");
 
 	// check status code of each app with HEAD req, return json
