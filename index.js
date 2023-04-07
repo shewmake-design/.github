@@ -116,6 +116,8 @@ app.use((req, res, next) => {
 	// check domain against apps.json to get port, redirect traffic to that port
 	const domain = req.get("host");
 
+	console.log(req.get("host"));
+
 	if (!domain) return next();
 
 	const apps = require("./apps.json");
