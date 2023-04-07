@@ -151,7 +151,16 @@ app.use("/", (req, res) => {
 	Promise.all(promises).then((apps) => {
 		// return json and status code 200 if all apps are up, otherwise return 500
 		const status = apps.every((app) => app.status === 200) ? 200 : 500;
-		res.status(status).json(apps, null, 2);
+		res.status(status).setHeader("Content-Type", "application/json").send(
+			JSON.stringify(
+				{
+					status,
+					apps,
+				},
+				null,
+				2
+			)
+		);
 	});
 });
 
