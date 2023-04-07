@@ -126,7 +126,8 @@ app.use((req, res, next) => {
 
 	if (!app) {
 		console.log("app not found", domain);
-		return res.status(404).send("Not found.");
+		// return res.status(404).send("Not found.");
+		return next();
 	}
 
 	proxy(`http://localhost:${app.port}`)(req, res, next);
