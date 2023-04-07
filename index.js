@@ -139,7 +139,7 @@ app.get("/", (req, res) => {
 	// check status code of each app with HEAD req, return json
 	const promises = apps.map((app) => {
 		return axios
-			.head(`http://localhost:${app.port}/api/status`)
+			.head(`http://localhost:${app.port}`)
 			.then((res) => {
 				return { ...app, status: res.status };
 			})
