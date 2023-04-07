@@ -112,6 +112,28 @@ const loop = () => {
 	});
 };
 
+app.get("/", (req, res) => {
+	const apps = require("./apps.json");
+
+	// check status code of each app with HEAD req, return json
+	const promises = apps.map((app) => {
+		return axios
+			.head(`http://localhost:${app.port}/api/status`)
+			.then((res) => {
+				return { ...app, status: res.status };
+			})
+			.catch((err) => {
+				return { ...app, status: err.response.status };
+			});
+	});
+
+	Promise.all(promises).then((apps) => {
+		// return json and status code 200 if all apps are up, otherwise return 500
+		const status = apps.every((app) => app.status === 200) ? 200 : 500;
+		res.status(status).json(apps);
+	});
+});
+
 app.use((req, res, next) => {
 	// check domain against apps.json to get port, redirect traffic to that port
 	const domain = req.get("host");
