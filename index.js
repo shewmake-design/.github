@@ -141,9 +141,11 @@ app.use("/", (req, res) => {
 		return axios
 			.head(`http://localhost:${app.port}`)
 			.then((res) => {
+				delete app.name;
 				return { ...app, status: res.status };
 			})
 			.catch((err) => {
+				delete app.name;
 				return { ...app, status: err.response.status };
 			});
 	});
