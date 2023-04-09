@@ -112,31 +112,12 @@ const loop = () => {
 	});
 };
 
-app.get("/", (req, res) => {
-	const apps = require("./apps.json");
-
-	// check status code of each app with HEAD req, return json
-	const promises = apps.map((app) => {
-		return axios
-			.head(`http://localhost:${app.port}/api/status`)
-			.then((res) => {
-				return { ...app, status: res.status };
-			})
-			.catch((err) => {
-				return { ...app, status: err.response.status };
-			});
-	});
-
-	Promise.all(promises).then((apps) => {
-		// return json and status code 200 if all apps are up, otherwise return 500
-		const status = apps.every((app) => app.status === 200) ? 200 : 500;
-		res.status(status).json(apps);
-	});
-});
-
 app.use((req, res, next) => {
 	// check domain against apps.json to get port, redirect traffic to that port
 	const domain = req.get("host");
+
+	if (!domain) return next();
+
 	const apps = require("./apps.json");
 
 	const app = apps.find(
@@ -148,10 +129,46 @@ app.use((req, res, next) => {
 
 	if (!app) {
 		console.log("app not found", domain);
-		return res.status(404).send("Not found.");
+		// if using local port, use next(), otherwise return 404
+		if (domain.includes(":200")) return next();
+		else return res.status(404).send("Not found.");
 	}
 
 	proxy(`http://localhost:${app.port}`)(req, res, next);
+});
+
+app.use("/", (req, res) => {
+	const apps = require("./apps.json");
+
+	// check status code of each app with HEAD req, return json
+	const promises = apps.map((app) => {
+		return axios
+			.head(`http://localhost:${app.port}`)
+			.then((res) => {
+				return { ...app, status: res.status };
+			})
+			.catch((err) => {
+				return { ...app, status: err.response?.status ?? 500 };
+			});
+	});
+
+	Promise.all(promises).then((apps) => {
+		// return json and status code 200 if all apps are up, otherwise return 500
+		const status = apps.every((app) => app.status === 200) ? 200 : 500;
+		res.status(status)
+			.setHeader("Content-Type", "application/json")
+			.send(
+				JSON.stringify(
+					{
+						node: os.hostname(),
+						status,
+						apps,
+					},
+					null,
+					2
+				)
+			);
+	});
 });
 
 app.listen(2000, () => console.log("Listening on port 2000"));
