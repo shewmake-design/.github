@@ -28,7 +28,9 @@ for (const app of apps) {
 			app.apiKey
 				? `/home/drone/sites/${app.name}`
 				: `${SITE_DIR}/${app.name}/${app.name}`
-		}${os.hostname() === "sat-00" ? " && git checkout dev" : ""}`,
+		}${
+			os.hostname() === "sat-00" ? " && git checkout dev && git pull" : ""
+		}`,
 		{
 			stdio: "inherit",
 		}
