@@ -2,6 +2,7 @@ console.time("Process finished in");
 const fs = require("fs");
 const { execSync } = require("child_process");
 const SITE_DIR = "/home/drone/actions-runner/_work";
+const os = require("os");
 
 const apps = JSON.parse(fs.readFileSync("./apps.json", "utf8")).filter(
 	(app) =>
