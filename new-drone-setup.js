@@ -46,7 +46,7 @@ for (const app of apps) {
 					: `${SITE_DIR}/${app.name}/${app.name}`
 			} && pnpm pkg delete scripts.prepare && pnpm install --force --shamefully-hoist --production && ` +
 			`echo Building site && ` +
-			`API_KEY=${app.apiKey} npm run build && ` +
+			`npm run build && ` +
 			`echo Restarting server && ` +
 			`cd ~/.github && pm2 delete ecosystem.config.js --only ${app.name} && pm2 start ecosystem.config.js --only ${app.name} && pm2 save && ` +
 			`echo Successfully built ${app.name}`,
