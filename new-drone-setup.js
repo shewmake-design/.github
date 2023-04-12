@@ -2,7 +2,6 @@ console.time("Process finished in");
 const fs = require("fs");
 const { execSync } = require("child_process");
 const SITE_DIR = "/home/drone/actions-runner/_work";
-const os = require("os");
 
 const apps = JSON.parse(fs.readFileSync("./apps.json", "utf8")).filter(
 	(app) =>
@@ -28,9 +27,7 @@ for (const app of apps) {
 			app.apiKey
 				? `/home/drone/sites/${app.name}`
 				: `${SITE_DIR}/${app.name}/${app.name}`
-		}${os.hostname() === "sat-00" ? " && git checkout dev" : ""}${
-			app.apiKey ? " && export API_KEY=" + app.apiKey : ""
-		}`,
+		}${os.hostname() === "sat-00" ? " && git checkout dev" : ""}`,
 		{
 			stdio: "inherit",
 		}
@@ -47,7 +44,7 @@ for (const app of apps) {
 					: `${SITE_DIR}/${app.name}/${app.name}`
 			} && pnpm pkg delete scripts.prepare && pnpm install --force --shamefully-hoist --production && ` +
 			`echo Building site && ` +
-			`npm run build && ` +
+			`API_KEY=${app.apiKey} npm run build && ` +
 			`echo Restarting server && ` +
 			`cd ~/.github && pm2 delete ecosystem.config.js --only ${app.name} && pm2 start ecosystem.config.js --only ${app.name} && pm2 save && ` +
 			`echo Successfully built ${app.name}`,
