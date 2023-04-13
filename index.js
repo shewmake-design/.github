@@ -122,9 +122,19 @@ app.use((req, res, next) => {
 
 	const apps = require("./apps.json");
 
-	const app = apps.find(
-		(app) => app.name === domain || app.name === domain.replace("www.", "")
-	);
+	const app = apps.find((app) => {
+		if (
+			os.hostname() === "sat-00" &&
+			domain.split(".dev.shewmake.design").length > 1
+		) {
+			return (
+				app.name === domain.split(".dev.shewmake.design")[0] ||
+				app.port === domain.split(".dev.shewmake.design")[0]
+			);
+		}
+
+		return app.name === domain || app.name === domain.replace("www.", "");
+	});
 
 	// add header with hostname
 	res.setHeader("x-node", os.hostname() ?? "unknown");
