@@ -85,15 +85,6 @@ const loop = () => {
 				} else {
 					console.log("Updates found.");
 					console.log("Spawning app setup...");
-					// spawn(
-					// 	"/bin/node",
-					// 	["/home/drone/.github/new-drone-setup.js"],
-					// 	{
-					// 		detached: true,
-					// 		// inherit output, but not input
-					// 		stdio: ["ignore", "inherit", "inherit"],
-					// 	}
-					// );
 					exec(
 						"node /home/drone/.github/new-drone-setup.js",
 						(err, stdout, stderr) => {
