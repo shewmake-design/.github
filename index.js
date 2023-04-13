@@ -130,7 +130,7 @@ app.use((req, res, next) => {
 			// scbaseball.org.dev.shewmake.design || 2002.dev.shewmake.design both forward to scbaseball.org on dev
 			return (
 				app.name === domain.split(".dev.shewmake.design")[0] ||
-				app.port === domain.split(".dev.shewmake.design")[0]
+				app.port.toString() === domain.split(".dev.shewmake.design")[0]
 			);
 		}
 
