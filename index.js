@@ -85,16 +85,28 @@ const loop = () => {
 				} else {
 					console.log("Updates found.");
 					console.log("Spawning app setup...");
-					spawn(
-						"/bin/node",
-						["/home/drone/.github/new-drone-setup.js"],
-						{
-							detached: true,
-							// inherit output, but not input
-							stdio: ["ignore", "inherit", "inherit"],
+					// spawn(
+					// 	"/bin/node",
+					// 	["/home/drone/.github/new-drone-setup.js"],
+					// 	{
+					// 		detached: true,
+					// 		// inherit output, but not input
+					// 		stdio: ["ignore", "inherit", "inherit"],
+					// 	}
+					// );
+					exec(
+						"node /home/drone/.github/new-drone-setup.js",
+						(err, stdout, stderr) => {
+							if (err) {
+								console.error(err);
+								return;
+							}
+							console.log("Spawned app setup.");
 						}
 					);
+
 					console.log("Restarting app-puller...");
+
 					exec(
 						"npm i && pm2 restart app-puller",
 						(err, stdout, stderr) => {
