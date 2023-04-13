@@ -127,6 +127,7 @@ app.use((req, res, next) => {
 			os.hostname() === "sat-00" &&
 			domain.split(".dev.shewmake.design").length > 1
 		) {
+			// scbaseball.org.dev.shewmake.design || 2002.dev.shewmake.design both forward to scbaseball.org on dev
 			return (
 				app.name === domain.split(".dev.shewmake.design")[0] ||
 				app.port === domain.split(".dev.shewmake.design")[0]
@@ -142,7 +143,8 @@ app.use((req, res, next) => {
 	if (!app) {
 		console.log("app not found", domain);
 		// if using local port, use next(), otherwise return 404
-		if (domain.includes(":200")) return next();
+		if (domain.includes(":200") || domain === "dev.shewmake.design")
+			return next();
 		else return res.status(404).send("Not found.");
 	}
 
