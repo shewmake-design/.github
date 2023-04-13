@@ -102,19 +102,18 @@ const loop = () => {
 								return;
 							}
 							console.log("Spawned app setup.");
-						}
-					);
+							console.log("Restarting app-puller...");
 
-					console.log("Restarting app-puller...");
-
-					exec(
-						"npm i && pm2 restart app-puller",
-						(err, stdout, stderr) => {
-							if (err) {
-								console.error(err);
-								return;
-							}
-							console.log("Restarted app-puller.");
+							exec(
+								"npm i && pm2 restart app-puller",
+								(err, stdout, stderr) => {
+									if (err) {
+										console.error(err);
+										return;
+									}
+									console.log("Restarted app-puller.");
+								}
+							);
 						}
 					);
 				}
