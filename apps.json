@@ -1,32 +1,26 @@
 [
 	{
-		"name": "dixiemeats.com",
+		"name": "scbaseball.org",
+		"apiKey": "z3yqJhrffuT0aSK6jV33",
 		"port": 2001
 	},
 	{
-		"name": "scbaseball.org",
-		"apiKey": "z3yqJhrffuT0aSK6jV33",
+		"name": "dixiemeats.com",
+		"apiKey": "g5fMeQob3vdgTmD1UIPI",
 		"port": 2002
 	},
 	{
-		"name": "natera.store",
+		"name": "peckservers.com",
 		"port": 2003
 	},
 	{
 		"name": "rflutah.org",
+		"apiKey": "xvYFHF0nr5UN260s42G7",
 		"port": 2004
-	},
-	{
-		"name": "peckservers.com",
-		"port": 2005
 	},
 	{
 		"name": "stgeorge-painting.com",
 		"apiKey": "jnLPCkEigI1TmNbRW4a0",
-		"port": 2006
+		"port": 2005
 	},
-	{
-		"name": "cottonwoodgear.com",
-		"port": 2007
-	}
 ]

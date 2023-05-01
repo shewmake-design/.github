@@ -2,6 +2,7 @@ console.time("Process finished in");
 const fs = require("fs");
 const { execSync } = require("child_process");
 const SITE_DIR = "/home/drone/actions-runner/_work";
+const os = require("os");
 
 const apps = JSON.parse(fs.readFileSync("./apps.json", "utf8")).filter(
 	(app) =>
@@ -23,6 +24,12 @@ for (const app of apps) {
 			app.apiKey
 				? `/home/drone/sites/${app.name}`
 				: `${SITE_DIR}/${app.name}/${app.name}`
+		} && cd ${
+			app.apiKey
+				? `/home/drone/sites/${app.name}`
+				: `${SITE_DIR}/${app.name}/${app.name}`
+		}${
+			os.hostname() === "sat-00" ? " && git checkout dev && git pull" : ""
 		}`,
 		{
 			stdio: "inherit",

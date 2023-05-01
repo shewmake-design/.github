@@ -85,24 +85,26 @@ const loop = () => {
 				} else {
 					console.log("Updates found.");
 					console.log("Spawning app setup...");
-					spawn(
-						"/bin/node",
-						["/home/drone/.github/new-drone-setup.js"],
-						{
-							detached: true,
-							// inherit output, but not input
-							stdio: ["ignore", "inherit", "inherit"],
-						}
-					);
-					console.log("Restarting app-puller...");
 					exec(
-						"npm i && pm2 restart app-puller",
+						"node /home/drone/.github/new-drone-setup.js",
 						(err, stdout, stderr) => {
 							if (err) {
 								console.error(err);
 								return;
 							}
-							console.log("Restarted app-puller.");
+							console.log("Spawned app setup.");
+							console.log("Restarting app-puller...");
+
+							exec(
+								"npm i && pm2 restart app-puller",
+								(err, stdout, stderr) => {
+									if (err) {
+										console.error(err);
+										return;
+									}
+									console.log("Restarted app-puller.");
+								}
+							);
 						}
 					);
 				}
@@ -120,9 +122,20 @@ app.use((req, res, next) => {
 
 	const apps = require("./apps.json");
 
-	const app = apps.find(
-		(app) => app.name === domain || app.name === domain.replace("www.", "")
-	);
+	const app = apps.find((app) => {
+		if (
+			os.hostname() === "sat-00" &&
+			domain.split(".dev.shewmake.design").length > 1
+		) {
+			// scbaseball.org.dev.shewmake.design || 2002.dev.shewmake.design both forward to scbaseball.org on dev
+			return (
+				app.name === domain.split(".dev.shewmake.design")[0] ||
+				app.port.toString() === domain.split(".dev.shewmake.design")[0]
+			);
+		}
+
+		return app.name === domain || app.name === domain.replace("www.", "");
+	});
 
 	// add header with hostname
 	res.setHeader("x-node", os.hostname() ?? "unknown");
@@ -130,7 +143,8 @@ app.use((req, res, next) => {
 	if (!app) {
 		console.log("app not found", domain);
 		// if using local port, use next(), otherwise return 404
-		if (domain.includes(":200")) return next();
+		if (domain.includes(":200") || domain === "dev.shewmake.design")
+			return next();
 		else return res.status(404).send("Not found.");
 	}
 
