@@ -22,5 +22,9 @@
 		"name": "stgeorge-painting.com",
 		"apiKey": "jnLPCkEigI1TmNbRW4a0",
 		"port": 2005
+	},
+	{
+		"name": "cottonwoodgear.com",
+		"port": 2006
 	}
 ]
